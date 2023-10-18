@@ -1,13 +1,11 @@
-package ru.kata.spring.boot_security.demo.converter;
+package ru.kata.spring.bootstrap.demo.converter;
 
-import ru.kata.spring.boot_security.demo.model.Role;
+import ru.kata.spring.bootstrap.demo.model.Role;
 
 import javax.persistence.AttributeConverter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static java.util.Collections.emptyList;
 
 public class AuthorityDatabaseConverter implements AttributeConverter<List<Role>, String> {
 

@@ -1,18 +1,14 @@
-package ru.kata.spring.boot_security.demo.configs;
+package ru.kata.spring.bootstrap.demo.configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import ru.kata.spring.boot_security.demo.dao.UserDao;
-import ru.kata.spring.boot_security.demo.model.Role;
-import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.bootstrap.demo.dao.UserDao;
+import ru.kata.spring.bootstrap.demo.model.Role;
+import ru.kata.spring.bootstrap.demo.model.User;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 

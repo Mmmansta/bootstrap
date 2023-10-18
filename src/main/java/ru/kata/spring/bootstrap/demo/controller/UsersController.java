@@ -1,15 +1,18 @@
-package ru.kata.spring.boot_security.demo.controller;
+package ru.kata.spring.bootstrap.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.bootstrap.demo.model.Role;
+import ru.kata.spring.bootstrap.demo.model.User;
+import ru.kata.spring.bootstrap.demo.service.UserService;
 
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -23,9 +26,13 @@ public class UsersController {
         this.userService = userService;
     }
 
+
     @GetMapping()
-    public String getUsers(Model model) {
+    public String getUsers(Model model, Authentication authentication) {
         model.addAttribute("users", userService.getUsers());
+        model.addAttribute("authentication", authentication.getPrincipal());
+        model.addAttribute("user", new User(List.of(new Role("ROLE_USER"), new Role("ROLE_ADMIN")), "", "", 0, ""));
+        model.addAttribute("roles", List.of("ROLE_ADMIN", "ROLE_USER"));
         return "users";
     }
 
@@ -55,13 +62,13 @@ public class UsersController {
         return "edit";
     }
 
-    @PatchMapping("/{id}")
+    @PostMapping("/{id}")
     public String updateUser(@ModelAttribute ("user") User user, @PathVariable ("id") int id) {
         userService.updateUser(id, user);
         return "redirect:/users";
     }
 
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}/delete")
     public String deleteUser(@PathVariable("id") int id) {
         userService.deleteUser(id);
         return "redirect:/users";

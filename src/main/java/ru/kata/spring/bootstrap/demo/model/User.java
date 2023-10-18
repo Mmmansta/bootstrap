@@ -1,8 +1,7 @@
-package ru.kata.spring.boot_security.demo.model;
+package ru.kata.spring.bootstrap.demo.model;
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.kata.spring.boot_security.demo.converter.AuthorityDatabaseConverter;
+import ru.kata.spring.bootstrap.demo.converter.AuthorityDatabaseConverter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -31,13 +30,13 @@ public class User implements UserDetails {
 
     @Convert(converter = AuthorityDatabaseConverter.class)
     @Column(name = "authorities")
-    private List<Role> grantedAuthorities;
+    private List<Role> authorities;
 
     @Column(name = "password")
     private String password;
 
-    public User(List<Role> grantedAuthorities, String username, String password, int age, String email){
-        this.grantedAuthorities = grantedAuthorities;
+    public User(List<Role> authorities, String username, String password, int age, String email){
+        this.authorities = authorities;
         this.name = username;
         this.password = password;
         this.age = age;
@@ -82,6 +81,10 @@ public class User implements UserDetails {
         this.email = email;
     }
 
+    public void setAuthorities(List<Role> authorities) {
+        this.authorities = authorities;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -94,7 +97,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends Role> getAuthorities() {
-        return grantedAuthorities;
+        return authorities;
     }
 
     @Override
